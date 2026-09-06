@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JM AquaPure Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8fb;
+      margin: 0;
+      padding: 25px;
+    }
+    
+    /* Gatekeeper Screen */
+    #locked-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      color: #666;
+    }
+    
+    /* Admin UI */
+    #admin-app {
+      display: none;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    h1 { color: #0879c9; margin: 0; }
+    .btn-logout {
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .stats {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 140px;
+      box-shadow: 0 2px 10px #0001;
+    }
+    table {
+      width: 100%;
+      margin-top: 25px;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    select, button { padding: 7px; }
+
+    /* Secret Login Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal-box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      width: 280px;
+      text-align: center;
+    }
+    .modal-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .modal-box .btn-submit {
+      background: #0879c9;
+      color: #fff;
+      border: none;
+      width: 100%;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .hidden { display: none !important; }
+    .err-text { color: #dc3545; font-size: 13px; margin-top: 8px; }
+
+    @media(max-width:700px){
+      table { font-size: 12px; }
+      .stats { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Normal Screen (Jab tak admin login na kare) -->
+  <div id="locked-screen">
+    <h2>JM AquaPure Portal</h2>
+    <p>Site is running normally.</p>
+  </div>
+
+  <!-- Hidden Admin Dashboard -->
+  <div id="admin-app">
+    <div class="header-bar">
+      <h1>JM AquaPure RO - Admin Dashboard</h1>
+      <button class="btn-logout" onclick="logoutAdmin()">Logout</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat">Total<br><strong id="total">0</strong></div>
+      <div class="stat">Pending<br><strong id="pending">0</strong></div>
+      <div class="stat">Confirmed<br><strong id="confirmed">0</strong></div>
+      <div class="stat">Completed<br><strong id="completed">0</strong></div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th><th>Phone</th><th>Service</th><th>Date</th><th>Time</th><th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <!-- Secret Prompt Popup -->
+  <div id="auth-modal" class="modal hidden">
+    <div class="modal-box">
+      <h3 style="margin:0;color:#333;">Admin Verification</h3>
+      <input type="password" id="auth-pass" placeholder="Secret Key...">
+      <button class="btn-submit" onclick="verifyAccess()">Enter</button>
+      <div id="auth-error" class="err-text"></div>
+    </div>
+  </div>
+
+<script>
+const SECRET_PIN = "9988"; // <-- Apna secret password yahan set karein
+
+// Shortcut Trigger: Ctrl + Shift + A dabane par password pop-up aayega
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && e.shiftKey && (e.key === "A" || e.key === "a")) {
+    e.preventDefault();
+    if (sessionStorage.getItem("isAdmin") !== "true") {
+      document.getElementById("auth-modal").classList.remove("hidden");
+      document.getElementById("auth-pass").focus();
+    }
+  }
+});
+
+function verifyAccess() {
+  const entered = document.getElementById("auth-pass").value;
+  const errorBox = document.getElementById("auth-error");
+
+  if (entered === SECRET_PIN) {
+    sessionStorage.setItem("isAdmin", "true");
+    document.getElementById("auth-modal").classList.add("hidden");
+    document.getElementById("auth-pass").value = "";
+    errorBox.innerText = "";
+    unlockDashboard();
+  } else {
+    errorBox.innerText = "Invalid Key";
+  }
+}
+
+function unlockDashboard() {
+  document.getElementById("locked-screen").classList.add("hidden");
+  document.getElementById("admin-app").style.display = "block";
+  loadBookings();
+}
+
+function logoutAdmin() {
+  sessionStorage.removeItem("isAdmin");
+  location.reload();
+}
+
+async function loadBookings(){
+  try {
+    const response = await fetch("/api/bookings");
+    const data = await response.json();
+    const bookings = data.bookings || [];
+
+    document.getElementById("total").textContent = bookings.length;
+    document.getElementById("pending").textContent = bookings.filter(x => x.status === "Pending").length;
+    document.getElementById("confirmed").textContent = bookings.filter(x => x.status === "Confirmed").length;
+    document.getElementById("completed").textContent = bookings.filter(x => x.status === "Completed").length;
+
+    document.getElementById("rows").innerHTML = bookings.map(b => `
+      <tr>
+        <td>${escapeHtml(b.name)}</td>
+        <td>${escapeHtml(b.phone)}</td>
+        <td>${escapeHtml(b.service)}</td>
+        <td>${escapeHtml(b.preferredDate)}</td>
+        <td>${escapeHtml(b.preferredTime)}</td>
+        <td>
+          <select onchange="updateStatus('${b._id}', this.value)">
+            ${["Pending","Confirmed","Technician Assigned","Completed","Cancelled"].map(s =>
+              `<option ${s === b.status ? "selected" : ""}>${s}</option>`
+            ).join("")}
+          </select>
+        </td>
+      </tr>
+    `).join("");
+  } catch (err) {
+    console.error("Failed to load bookings", err);
+  }
+}
+
+async function updateStatus(id, status){
+  await fetch("/api/bookings/" + id + "/status", {
+    method:"PATCH",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({status})
+  });
+  loadBookings();
+}
+
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
+}
+
+// Auto-unlock agar session active hai
+if (sessionStorage.getItem("isAdmin") === "true") {
+  unlockDashboard();
+}
+</script>
+</body>
+</html>

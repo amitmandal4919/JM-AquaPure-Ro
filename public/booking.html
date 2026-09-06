@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book RO Service</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#eef9ff;margin:0;padding:30px}
+    .box{max-width:600px;margin:auto;background:#fff;padding:25px;border-radius:15px;box-shadow:0 5px 25px #0001}
+    h1{color:#0879c9;text-align:center}
+    input,select,textarea,button{width:100%;box-sizing:border-box;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px}
+    button{background:#0879c9;color:#fff;border:0;font-weight:bold;cursor:pointer}
+    #result{margin-top:15px;font-weight:bold}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Book RO Service</h1>
+    <form id="bookingForm">
+      <input id="name" placeholder="Your Name" required>
+      <input id="phone" placeholder="Mobile Number" required>
+      <input id="email" type="email" placeholder="Email">
+      <input id="address" placeholder="Address" required>
+
+      <select id="service" required>
+        <option value="">Select Service</option>
+        <option>RO Repair</option>
+        <option>RO Installation</option>
+        <option>RO Cleaning</option>
+        <option>RO Replacement</option>
+        <option>RO Maintenance</option>
+      </select>
+
+      <input id="preferredDate" type="date" required>
+      <input id="preferredTime" type="time" required>
+      <textarea id="message" placeholder="Describe your problem"></textarea>
+
+      <button type="submit">BOOK SERVICE</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+<script>
+document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+    service: document.getElementById("service").value,
+    preferredDate: document.getElementById("preferredDate").value,
+    preferredTime: document.getElementById("preferredTime").value,
+    message: document.getElementById("message").value
+  };
+
+  const result = document.getElementById("result");
+
+  try {
+    const response = await fetch("/api/bookings", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(data)
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) throw new Error(json.message);
+
+    result.textContent = "Booking successful! Your booking ID is " + json.booking._id;
+    document.getElementById("bookingForm").reset();
+  } catch (error) {
+    result.textContent = "Booking failed: " + error.message;
+  }
+});
+</script>
+</body>
+</html>

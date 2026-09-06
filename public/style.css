@@ -1,0 +1,541 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    overscroll-behavior: smooth;
+    color: black;
+}
+nav h1{
+    font-size: px;
+        color: #4bb8ff;
+
+}
+ nav {
+padding: 20px;
+display: flex;
+justify-content: space-between;
+ }
+ nav a{
+
+    padding: 15px;
+    text-decoration: none;
+    font-size: 1.04rem;
+    color: black
+ }
+ img{
+    width: 100%;
+    height: auto;
+    min-height: 250px;
+    object-fit: cover;
+ }
+ .head{
+    position: relative;
+ }
+ .button{
+    position: absolute;
+    bottom: 30px;
+    left: 30%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+ }
+.button a{
+    padding: 12px 20px ;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.button2 {
+   padding: 12px 20px ;
+   background: #007bff;
+   color: #fff;
+   text-decoration: none;
+   border-radius: 5px;
+}
+
+.service{
+       
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+h2{
+    position: relative;
+text-align: center;
+align-items: center;
+justify-content: center;
+font-size: 2rem;
+margin-top: 20px;
+color: #4bb8ff
+
+}
+.ro:hover{
+font-size: 1.08rem;
+
+
+}
+.ro img{
+    width: 30vh;
+    height: 12vw;
+    margin-top: 20px;
+    
+}
+.ro a{
+    text-decoration: none;
+}
+    .ro{
+         padding: 0px 13px 5px;
+ border-radius: 15px;
+ height: 300px;
+ width: 43%;
+ margin-top: 25px;
+ margin: 10px;
+ background-color: #fff;
+
+
+}
+.ro{
+
+             text-align: center;
+ font-size: 1.10rem;
+}
+h3{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px ;
+    color: #4bb8ff;
+
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+.product h4{
+    font-size: 40px;
+    color: #4bb8ff;
+
+    margin: 20px;
+    font-weight: bold;
+    font-style: italic;
+}
+.card   img{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    height: 30%;
+    margin: 10px;
+    margin-left: 34px;
+}
+.why h3{
+    font-size: 40px;
+        color: #4bb8ff;
+
+    margin: 20px;
+
+}
+.why li{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 50px;
+    margin-top: 10px;
+}
+.why p{
+    font-size: 20px;
+    margin-left: 10px;
+}
+footer {
+    background: #09243d;
+    color: white;
+    padding-top: 55px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 6% 45px;
+    display: grid;
+    grid-template-columns:
+        2fr 1fr 1fr;
+    gap: 50px;
+}
+
+.footer-content h2 {
+    color: #4bb8ff;
+
+    margin-bottom: 15px;
+}
+
+.footer-content h3 {
+    margin-bottom: 15px;
+}
+
+.footer-content p {
+    color: #b9c9d5;
+
+    line-height: 1.7;
+}
+
+.footer-content a {
+    display: block;
+
+    color: #b9c9d5;
+
+    text-decoration: none;
+
+    margin-bottom: 10px;
+}
+
+.footer-content a:hover {
+    color: white;
+}
+
+.copyright {
+    border-top: 1px solid rgba(255,255,255,0.1);
+
+    text-align: center;
+
+    padding: 20px;
+
+    color: #9eb2c0;
+}
+
+
+/* =========================
+   WHATSAPP
+========================= */
+
+.whatsapp {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    background: #25d366;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 14px 20px;
+
+    border-radius: 50px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.2);
+
+    z-index: 2000;
+}
+/* =========================
+   RESPONSIVE HOME PAGE
+========================= */
+
+/* TABLET */
+@media (max-width: 768px) {
+
+    /* NAVBAR */
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        padding: 15px 10px;
+    }
+
+    nav h1 {
+        width: 100%;
+        text-align: center;
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+
+    nav a {
+        padding: 8px;
+        font-size: 15px;
+    }
+
+    .book {
+        padding: 8px 12px;
+        margin: 3px;
+    }
+
+
+    /* HERO IMAGE */
+    .head img {
+        width: 100%;
+        min-height: 250px;
+        height: auto;
+        object-fit: cover;
+    }
+
+    /* HERO BUTTONS */
+    .button {
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        gap: 10px;
+        width: max-content;
+    }
+
+    .button a {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+
+    /* SERVICES */
+    .service {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .ro {
+        width: auto;
+        height: auto;
+        min-height: 280px;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .ro img {
+        width: 80%;
+        height: 130px;
+        object-fit: cover;
+        margin-top: 10px;
+    }
+
+    .ro h4 {
+        font-size: 20px;
+        margin: 8px 0;
+    }
+
+    .ro span {
+        font-size: 15px;
+    }
+
+
+    /* PRODUCTS */
+    .product {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .product .card {
+        width: auto;
+    }
+
+    .product h4 {
+        font-size: 28px;
+        margin: 15px;
+        text-align: center;
+    }
+
+    .product img {
+        width: 80%;
+        height: 130px;
+        object-fit: cover;
+        margin: 10px auto;
+    }
+
+
+    /* WHY CHOOSE US */
+    .why {
+        padding: 10px 15px 30px;
+    }
+
+    .why h3 {
+        font-size: 32px;
+    }
+
+    .why p {
+        font-size: 17px;
+        margin-left: 0;
+        line-height: 1.5;
+    }
+
+    .why li {
+        font-size: 17px;
+        margin-left: 25px;
+        margin-top: 8px;
+    }
+
+
+    /* FOOTER */
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 0 25px 35px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    /* NAVBAR */
+    nav {
+        flex-direction: column;
+        gap: 5px;
+        padding: 12px;
+    }
+
+    nav h1 {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    nav a {
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    .book {
+        width: 150px;
+        margin-top: 5px;
+    }
+
+
+    /* HERO */
+    .head img {
+        width: 100%;
+        height: 300px;
+        min-height: 0;
+        object-fit: cover;
+    }
+
+    .button {
+        bottom: 15px;
+        gap: 8px;
+    }
+
+    .button a {
+        padding: 9px 13px;
+        font-size: 13px;
+    }
+
+
+    /* SERVICES */
+    h2 {
+        font-size: 28px;
+        margin-top: 20px;
+    }
+
+    .service {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .ro {
+        width: auto;
+        min-height: 300px;
+        height: auto;
+        margin: 0;
+        padding: 15px;
+    }
+
+    .ro img {
+        width: 80%;
+        height: 150px;
+        object-fit: cover;
+        margin: 5px auto 10px;
+    }
+
+    .ro h4 {
+        font-size: 22px;
+    }
+
+    .ro span {
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+
+    /* PRODUCTS */
+    h3 {
+        font-size: 32px;
+    }
+
+    .product {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .product h4 {
+        font-size: 28px;
+        text-align: center;
+        margin: 15px;
+    }
+
+    .product img {
+        width: 80%;
+        height: 150px;
+        margin: 10px auto;
+        object-fit: cover;
+    }
+
+
+    /* WHY */
+    .why {
+        padding: 10px 20px 30px;
+    }
+
+    .why h3 {
+        font-size: 30px;
+        margin: 20px 0;
+    }
+
+    .why p {
+        font-size: 16px;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .why li {
+        font-size: 16px;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+
+    /* FOOTER */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 0 25px 30px;
+        text-align: center;
+    }
+
+    .footer-content h2 {
+        font-size: 25px;
+    }
+
+    .footer-content h3 {
+        font-size: 21px;
+    }
+
+
+    /* WHATSAPP */
+    .whatsapp {
+        right: 15px;
+        bottom: 15px;
+        padding: 12px 17px;
+        font-size: 14px;
+    }
+}
