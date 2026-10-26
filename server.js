@@ -16,7 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Optional: serve frontend files from backend/public
 app.use(express.static(path.join(__dirname, "public")));
-
 app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "JM AquaPure RO backend is running" });
 });
